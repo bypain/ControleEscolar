@@ -1,0 +1,55 @@
+@model IEnumerable<ControleEscolar.Models.Matricula>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Listar Matrículas</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Matrículas</h1>
+        <a href="@Url.Action("Create")" class="btn btn-primary mb-3">Cadastrar Matrícula</a>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Aluno</th>
+                    <th>Professor</th>
+                    <th>Disciplina</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var matricula in Model)
+                {
+                    <tr>
+                        <td>@matricula.Aluno!.Nome</td>
+                        <td>@matricula.Professor!.Nome</td>
+                        <td>@matricula.Disciplina!.Nome</td>
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = matricula.Id })" class="btn btn-sm btn-warning" title="Editar">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <form asp-action="Delete" asp-controller="Matricula" method="post" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir a matrícula de @matricula.Aluno.Nome?')">
+                                <input type="hidden" name="id" value="@matricula.Id" />
+                                <button type="submit" class="btn btn-sm btn-danger" title="Excluir">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="4" class="text-center">Nenhuma matrícula cadastrada.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
+</html>

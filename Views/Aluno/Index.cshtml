@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ControleEscolar.Models.Aluno>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Alunos</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        function confirmDelete(matricula) {
+            return confirm(`Tem certeza de que deseja excluir o aluno com matrícula ${matricula}?`);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Alunos</h1>
+        <a href="@Url.Action("Create")" class="btn btn-primary mb-3">Cadastrar Aluno</a>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Matricula</th>
+                    <th>Nome</th>
+                    <th>Endereço</th>
+                    <th>Data Nascimento</th>
+                    <th>Valor Mensalidade</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var aluno in Model)
+                {
+                    <tr>
+                        <td>@aluno.Matricula</td>
+                        <td>@aluno.Nome</td>
+                        <td>@aluno.Endereco</td>
+                        <td>@aluno.DataNascimento.ToString("dd/MM/yyyy")</td>
+                        <td>@aluno.ValorMensalidade.ToString("C")</td>
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = aluno.Id })" class="btn btn-sm btn-warning" title="Editar">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <form asp-action="Delete" asp-controller="Aluno" method="post" style="display:inline;" onsubmit="return confirmDelete('@aluno.Matricula')">
+                                <input type="hidden" name="id" value="@aluno.Id" />
+                                <button type="submit" class="btn btn-sm btn-danger" title="Excluir">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="6" class="text-center">Nenhum aluno cadastrado.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
+</html>

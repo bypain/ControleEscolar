@@ -1,0 +1,55 @@
+@model IEnumerable<ControleEscolar.Models.Professor>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Professores</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Professores</h1>
+        <a href="@Url.Action("Create")" class="btn btn-primary mb-3">Cadastrar Professor</a>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Endereço</th>
+                    <th>Data Nascimento</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var professor in Model)
+                {
+                    <tr>
+                        <td>@professor.Nome</td>
+                        <td>@professor.Endereco</td>
+                        <td>@professor.DataNascimento.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = professor.Id })" class="btn btn-sm btn-warning" title="Editar">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <form asp-action="Delete" asp-controller="Professor" method="post" style="display:inline;" onsubmit="return confirm('Tem certeza que deseja excluir o professor @professor.Nome?')">
+                                <input type="hidden" name="id" value="@professor.Id" />
+                                <button type="submit" class="btn btn-sm btn-danger" title="Excluir">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="4" class="text-center">Nenhum professor cadastrado.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+</body>
+</html>

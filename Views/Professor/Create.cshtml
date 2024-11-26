@@ -1,0 +1,38 @@
+@model ControleEscolar.Models.Professor
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Professor</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Cadastrar Professor</h1>
+        <form asp-action="Create" method="post">
+            <div class="form-group">
+                <label for="Nome">Nome</label>
+                <input type="text" name="Nome" id="Nome" class="form-control" maxlength="80" required />
+                <small class="form-text text-muted">Limite de 80 caracteres.</small>
+            </div>
+            <div class="form-group">
+                <label for="Endereco">Endereço</label>
+                <input type="text" name="Endereco" id="Endereco" class="form-control" maxlength="100" required />
+                <small class="form-text text-muted">Limite de 100 caracteres.</small>
+            </div>
+            <div class="form-group">
+                <label for="DataNascimento">Data de Nascimento</label>
+                <input type="date" class="form-control" id="DataNascimento" name="DataNascimento"
+                       max="@DateTime.Now.ToString("yyyy-MM-dd")" required />
+                <span asp-validation-for="DataNascimento" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-success">Salvar</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

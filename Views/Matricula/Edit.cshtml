@@ -1,0 +1,53 @@
+@model ControleEscolar.Models.Matricula
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Matrícula</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Editar Matrícula</h1>
+        <form asp-action="Edit" method="post">
+            <div class="form-group">
+                <label for="AlunoId">Aluno</label>
+                <select asp-for="AlunoId" class="form-control" required>
+                    <option value="">Selecione um Aluno</option>
+                    @foreach (var aluno in ViewData["AlunoId"] as SelectList ?? new SelectList(Enumerable.Empty<SelectListItem>()))
+                    {
+                        <option value="@aluno.Value" selected="@(aluno.Value == Model.AlunoId.ToString() ? "selected" : "")">@aluno.Text</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="ProfessorId">Professor</label>
+                <select asp-for="ProfessorId" class="form-control" required>
+                    <option value="">Selecione um Professor</option>
+                    @foreach (var professor in ViewData["ProfessorId"] as SelectList ?? new SelectList(Enumerable.Empty<SelectListItem>()))
+                    {
+                        <option value="@professor.Value" selected="@(professor.Value == Model.ProfessorId.ToString() ? "selected" : "")">@professor.Text</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="DisciplinaId">Disciplina</label>
+                <select asp-for="DisciplinaId" class="form-control" required>
+                    <option value="">Selecione uma Disciplina</option>
+                    @foreach (var disciplina in ViewData["DisciplinaId"] as SelectList?? new SelectList(Enumerable.Empty<SelectListItem>()))
+                    {
+                        <option value="@disciplina.Value" selected="@(disciplina.Value == Model.DisciplinaId.ToString() ? "selected" : "")">@disciplina.Text</option>
+
+                    }
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-warning">Atualizar</button>
+            <a href="@Url.Action("Index")" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>
